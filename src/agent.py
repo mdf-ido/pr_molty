@@ -275,7 +275,7 @@ class PuertoRicoMolty:
         logger.info("Starting heartbeat...")
 
         home = self.client.get_home()
-        if not home.get("success"):
+        if not home or not home.get("your_account"):
             logger.error(f"Failed to get home: {home}")
             return "HEARTBEAT_ERROR - Could not connect to Moltbook"
 
@@ -306,8 +306,9 @@ class PuertoRicoMolty:
 
         if home.get("your_direct_messages"):
             dm_info = home["your_direct_messages"]
-            if dm_info.get("unread_message_count", 0) > 0:
-                activity_summary.append(f"{dm_info['unread_message_count']} unread DMs")
+            unread = dm_info.get("unread_message_count", 0)
+            if int(unread) > 0:
+                activity_summary.append(f"{unread} unread DMs")
 
         feed = self.client.get_feed(sort="new", limit=30)
         if feed.get("success") and feed.get("posts"):
@@ -445,12 +446,22 @@ def main():
     args = parser.parse_args()
 
     try:
-        agent = PuertoRicoMolty(args.config)
-
         if args.register:
-            result = agent.register_and_claim()
+            with open(args.config, "r") as f:
+                config = yaml.safe_load(f)
+            client = MoltbookClient("dummy", config["moltbook"]["base_url"])
+            result = client._request(
+                "POST",
+                "/agents/register",
+                json={
+                    "name": config["agent"]["name"],
+                    "description": config["agent"]["description"],
+                },
+            )
             print(json.dumps(result, indent=2))
             return
+
+        agent = PuertoRicoMolty(args.config)
 
         while True:
             try:
