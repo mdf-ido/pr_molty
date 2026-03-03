@@ -194,7 +194,7 @@ class PuertoRicoMolty:
         self.agent_config = self.config["agent"]
         self.heartbeat_config = self.config["heartbeat"]
 
-        self.state_file = "/data/state.json"
+        self.state_file = "/tmp/puerto-rico-molty-state.json"
         self.state = self._load_state()
 
         self.posts_today = 0
