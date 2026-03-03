@@ -275,7 +275,7 @@ class PuertoRicoMolty:
         logger.info("Starting heartbeat...")
 
         home = self.client.get_home()
-        if not home or not home.get("your_account"):
+        if not home or "your_account" not in home:
             logger.error(f"Failed to get home: {home}")
             return "HEARTBEAT_ERROR - Could not connect to Moltbook"
 
@@ -303,6 +303,9 @@ class PuertoRicoMolty:
                                 if answer:
                                     self.client.verify(code, answer)
                             activity_summary.append(f"replied to comment")
+                    self.client._request(
+                        "POST", f"/notifications/read-by-post/{post_id}"
+                    )
 
         if home.get("your_direct_messages"):
             dm_info = home["your_direct_messages"]
