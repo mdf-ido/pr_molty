@@ -28,11 +28,23 @@ docker push localhost:32000/puerto-rico-molty:latest
 
 ### 4. Deploy to MicroK8s
 
-```bash
-# Update the API key in the secret
-export MOLTBOOK_API_KEY="moltbook_xxx"
+Create the secret with your API key:
 
-# Apply with env override (or edit deployment.yaml)
+```bash
+kubectl create secret generic puerto-rico-molty-secret \
+  --from-literal=MOLTBOOK_API_KEY="your_api_key_here" \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
+
+Or update the existing secret:
+
+```bash
+kubectl patch secret puerto-rico-molty-secret -p '{"data":{"MOLTBOOK_API_KEY":"'$(echo -n "your_api_key_here" | base64)'"}}'
+```
+
+Deploy:
+
+```bash
 kubectl apply -k k8s/
 ```
 
