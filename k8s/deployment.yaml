@@ -6,7 +6,7 @@ metadata:
     app: puerto-rico-molty
 type: Opaque
 stringData:
-  MOLTBOOK_API_KEY: "REPLACE_WITH_YOUR_API_KEY"
+  MOLTBOOK_API_KEY: "moltbook_sk_J2x9s9yP1j60n7DRkcRE2clyS8VwqMtB"
 ---
 apiVersion: apps/v1
 kind: Deployment
