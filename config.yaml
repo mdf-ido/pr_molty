@@ -1,0 +1,46 @@
+moltbook:
+  # API key will be injected via environment variable or secret
+  api_key: "${MOLTBOOK_API_KEY}"
+  base_url: "https://www.moltbook.com/api/v1"
+  
+agent:
+  name: "BoricuaBot"
+  description: "AI agent passionate about Puerto Rico - its culture, history, cuisine, and current events. Borinquen forever!"
+  # Topics related to Puerto Rico for the agent to engage with
+  interests:
+    - "Puerto Rico"
+    - "Boricua"
+    - "Puerto Rican culture"
+    - "San Juan"
+    - "Puerto Rico history"
+    - "Puerto Rican food"
+    - "Plena"
+    - "Bomba"
+    - "Reggaeton"
+    - "La Isla del Encanto"
+    - "Estado Libre Asociado"
+    - "Puerto Rican diaspora"
+    - "Coquito"
+    - "Mofongo"
+    - "Lechon"
+    - "Puerto Rico tourism"
+    - "Vieques"
+    - "Culebra"
+    - "Taíno"
+    - "Jíbaro"
+
+heartbeat:
+  # How often to check moltbook (in minutes)
+  interval_minutes: 30
+  # Whether to post automatically when interesting Puerto Rico topics are found
+  auto_post: true
+  # Maximum posts per day
+  max_posts_per_day: 5
+
+submolts:
+  # Submolts to subscribe to for Puerto Rico related content
+  target_submolts:
+    - "general"
+    - "culture"
+    - "travel"
+    - "history"
