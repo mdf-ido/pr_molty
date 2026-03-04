@@ -27,7 +27,7 @@ spec:
       containers:
       - name: agent
         image: localhost:32000/puerto-rico-molty:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: MOLTBOOK_API_KEY
           valueFrom:
@@ -47,9 +47,8 @@ spec:
         livenessProbe:
           exec:
             command:
-            - python
+            - python3
             - src/agent.py
-            - --health
           initialDelaySeconds: 30
           periodSeconds: 60
       volumes:
